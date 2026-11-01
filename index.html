@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tasks | مهامي</title>
+<meta name="description" content="Bilingual (Arabic/English) to-do list with dark and light themes.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+/* Apply saved theme/lang before paint to avoid a flash */
+(function () {
+  try {
+    var s = JSON.parse(localStorage.getItem('todo.settings') || '{}');
+    var theme = s.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var lang = s.lang || ((navigator.language || 'en').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en');
+    var d = document.documentElement;
+    d.dataset.theme = theme; d.lang = lang; d.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  } catch (e) {}
+})();
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <h1 id="title">Tasks</h1>
+    <div class="tools">
+      <button id="langBtn" class="chip" type="button"></button>
+      <button id="themeBtn" class="chip" type="button"></button>
+    </div>
+  </header>
+
+  <p id="summary" class="summary" aria-live="polite"></p>
+
+  <form id="addForm" class="add" autocomplete="off">
+    <input id="newTask" type="text" maxlength="200" required>
+    <button id="addBtn" type="submit"></button>
+  </form>
+
+  <nav id="filters" class="filters" role="tablist">
+    <button type="button" data-filter="all"></button>
+    <button type="button" data-filter="active"></button>
+    <button type="button" data-filter="done"></button>
+  </nav>
+
+  <ul id="list" class="list"></ul>
+  <p id="empty" class="empty" hidden></p>
+
+  <footer class="foot">
+    <button id="clearBtn" class="link" type="button"></button>
+  </footer>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
